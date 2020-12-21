@@ -18,15 +18,17 @@ export class LockInputComponent implements ControlValueAccessor {
 
   disabled = false;
   onTouched: () => void;
-  onChange: (value: boolean) => void = () => {};
+  onChange: (value: boolean) => void = () => { };
 
   writeValue(obj: boolean): void {
+    debugger
     this.value = obj;
   }
   registerOnChange(fn: any): void {
     this.onChange = fn;
   }
   registerOnTouched(fn: any): void {
+
     this.onTouched = fn;
   }
   setDisabledState?(isDisabled: boolean): void {
@@ -34,6 +36,7 @@ export class LockInputComponent implements ControlValueAccessor {
   }
 
   setValue() {
+
     if (this.disabled) {
       return;
     }
