@@ -21,7 +21,6 @@ export class LockInputComponent implements ControlValueAccessor {
   onChange: (value: boolean) => void = () => { };
 
   writeValue(obj: boolean): void {
-    debugger
     this.value = obj;
   }
   registerOnChange(fn: any): void {

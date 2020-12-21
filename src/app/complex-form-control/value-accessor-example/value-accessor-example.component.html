@@ -3,7 +3,7 @@
     <input matInput formControlName="itemName" name="no-name" placeholder="Add item" />
   </mat-form-field>
   <app-lock-input formControlName="isLocked"></app-lock-input>
-  <button style="margin-top: 1rem;" mat-stroked-button (click)="onSubmit()">
+  <button [disabled]="!form.touched" style="margin-top: 1rem;" mat-stroked-button (click)="onSubmit()">
     Add item
   </button>
 </form>

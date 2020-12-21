@@ -9,12 +9,12 @@ import { Component, OnInit } from '@angular/core';
 export class ValueAccessorExampleComponent implements OnInit {
   form: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.form = this.fb.group({
       itemName: new FormControl(),
-      isLocked: new FormControl(false),
+      isLocked: new FormControl({ value: false, disabled: false }),
     });
   }
 
