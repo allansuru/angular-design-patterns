@@ -28,4 +28,4 @@ import { AdvancedSearchControlModule } from './advanced-search-control/advanced-
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

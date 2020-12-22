@@ -8,7 +8,6 @@ import { Component, OnInit, ContentChild } from '@angular/core';
   styleUrls: ['./widget-wrapper.component.scss'],
 })
 export class WidgetWrapperComponent implements OnInit {
-  // @ContentChild(WIDGET as any, { static: true })
   @ContentChild(WIDGET as any, { static: true })
   widget: Widget;
 

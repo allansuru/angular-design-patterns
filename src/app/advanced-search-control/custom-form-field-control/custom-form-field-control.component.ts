@@ -13,7 +13,7 @@ import {
   DoCheck,
 } from '@angular/core';
 import { MatFormFieldControl } from '@angular/material/form-field';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import {
   NgControl,
   ControlValueAccessor,
@@ -32,10 +32,14 @@ import {
 } from '@angular/material/core';
 import { take } from 'rxjs/operators';
 
+
+
+
 export interface FormFieldValue {
   query: string;
   scope: string;
 }
+
 
 export class CustomErrorMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl): boolean {
@@ -49,7 +53,7 @@ class SearchInputBase {
     public _parentForm: NgForm,
     public _defaultErrorStateMatcher: ErrorStateMatcher,
     public ngControl: NgControl
-  ) {}
+  ) { }
 }
 
 const _SearchInputMixiBase: CanUpdateErrorStateCtor &
@@ -72,11 +76,11 @@ const _SearchInputMixiBase: CanUpdateErrorStateCtor &
 })
 export class CustomFormFieldControlComponent extends _SearchInputMixiBase
   implements
-    OnInit,
-    OnDestroy,
-    MatFormFieldControl<FormFieldValue>,
-    ControlValueAccessor,
-    DoCheck {
+  OnInit,
+  OnDestroy,
+  MatFormFieldControl<FormFieldValue>,
+  ControlValueAccessor,
+  DoCheck {
   static nextId = 0;
   @ViewChild(MatInput, { read: ElementRef, static: true })
   input: ElementRef;
@@ -191,5 +195,9 @@ export class CustomFormFieldControlComponent extends _SearchInputMixiBase
   ngOnDestroy() {
     this.focusMonitor.stopMonitoring(this.input);
     this.stateChanges.complete();
+  }
+
+  teste() {
+    console.log(this.form.value)
   }
 }
