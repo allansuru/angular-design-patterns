@@ -7,12 +7,17 @@ import { ComponentPortal } from '@angular/cdk/portal';
 import { Platform } from '@angular/cdk/platform';
 import { map } from 'rxjs/operators';
 import { LoggerService } from './logger.service';
+import { Logger2Service } from './logger2.service';
+import { ExperimentalLoggerService } from './experimental-logger.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  providers: [LoggerService]
+  providers: [LoggerService, {
+    provide: Logger2Service,
+    useClass: ExperimentalLoggerService
+  }]
 
 })
 export class AppComponent implements OnInit {
@@ -31,14 +36,18 @@ export class AppComponent implements OnInit {
     public platform: Platform,
     private breakpointObserver: BreakpointObserver,
     @Self() private loggerService: LoggerService,
+    private logger2: Logger2Service,
 
   ) {
-    this.loggerService.log('OI APP COMPONENT');
+    // this.loggerService.log('OI APP COMPONENT');
 
   }
 
 
   ngOnInit(): void {
+
+    this.logger2.prefix = 'APP COMPONENT';
+    this.logger2.log('App Component init...')
 
     this.isWideScreen$ = this.breakpointObserver
       .observe([Breakpoints.HandsetLandscape])
