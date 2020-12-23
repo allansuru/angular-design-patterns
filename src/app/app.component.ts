@@ -9,14 +9,21 @@ import { map } from 'rxjs/operators';
 import { LoggerService } from './logger.service';
 import { Logger2Service } from './logger2.service';
 import { ExperimentalLoggerService } from './experimental-logger.service';
+import { LegacyLogger } from './logger.legacy';
+import { APP_CONFIG, AppConfig } from './config.token';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   providers: [LoggerService, {
-    provide: Logger2Service,
-    useClass: ExperimentalLoggerService
+    provide: Logger2Service, useFactory: (config: AppConfig, http: HttpClient) =>
+      config.experimentalEnabled
+        ? new ExperimentalLoggerService(http)
+        : new Logger2Service(),
+
+    deps: [APP_CONFIG]
   }]
 
 })
@@ -38,6 +45,8 @@ export class AppComponent implements OnInit {
     @Self() private loggerService: LoggerService,
     private logger2: Logger2Service,
 
+    private experimentalLogger: ExperimentalLoggerService
+
   ) {
     // this.loggerService.log('OI APP COMPONENT');
 
@@ -45,9 +54,12 @@ export class AppComponent implements OnInit {
 
 
   ngOnInit(): void {
-
+    console.log(this.experimentalLogger)
     this.logger2.prefix = 'APP COMPONENT';
     this.logger2.log('App Component init...')
+
+    console.log('is the same instance: ', this.logger2 === this.experimentalLogger)
+
 
     this.isWideScreen$ = this.breakpointObserver
       .observe([Breakpoints.HandsetLandscape])
